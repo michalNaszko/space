@@ -40,7 +40,7 @@ class LoginController extends Controller
      */
     public function show() : Factory|View
     {
-        return view('signIn');
+        return view('login');
     }
 
     /**
