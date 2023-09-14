@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        return view('posts', [
+            'posts' => Post::latest()->filter(request(['search']))->get()
+        ]);
+    }
+
     /**
      * @param Request $request
      * @return void
@@ -35,24 +42,26 @@ class PostController extends Controller
 
         $post->save();
 
-        $this->addTags($request->input('tags'), $post->id);
+        $this->addTags($request->input('tags'), $post);
     }
 
     /**
      * @param String $tags
      * @return void
      */
-    private function addTags(String $tags, int $post_id): void
+    private function addTags(String $tags, Post $post): void
     {
         $tagsArray = explode(' ', $tags);
 
         foreach ($tagsArray as $tag) {
             echo $tag . '<br>';
-            $tagModel = new Tag();
-            $tagModel->post_id = $post_id;
-            $tagModel->tag = $tag;
+            $tagModel = Tag::firstOrNew(['name' => $tag]);
 
-            $tagModel->save();
+            if(! $tagModel->id ) {
+                $tagModel->save();
+            }
+
+            $tagModel->posts()->attach($post);
         }
     }
 }

@@ -28,4 +28,17 @@ class Post extends Model
         'text',
         'user_id'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, fn($query, $search) =>
+            $query
+                ->where('title', 'like', '%' . $search . '%')
+                ->orWhere('text', 'like', '%' . $search . '%'));
+    }
 }

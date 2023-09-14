@@ -17,7 +17,11 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
-        'post_id',
-        'tag',
+        'name',
     ];
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
+    }
 }

@@ -42,9 +42,6 @@ Route::get('/logout', function (Request $request) {
     return redirect('/');
 });
 
-Route::get('/posts', function () {
-    return view('posts', [
-        'posts' => Post::where('user_id', Auth::id())->get()->filter(request(['search']))
-    ]);
-})->middleware('auth');
+Route::get('/posts',
+    [PostController::class, 'index'])->middleware('auth');
 
