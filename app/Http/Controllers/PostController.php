@@ -6,13 +6,16 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use PhpParser\Node\NullableType;
 
 class PostController extends Controller
 {
     public function index()
     {
+        Log::info('request: ' . request());
         return view('posts', [
-            'posts' => Post::latest()->filter(request(['search']))->get()
+            'posts' => Post::latest()->filter(request(['search', 'tag']))->get()
         ]);
     }
 
@@ -49,7 +52,7 @@ class PostController extends Controller
      * @param String $tags
      * @return void
      */
-    private function addTags(String $tags, Post $post): void
+    private function addTags(String|null $tags, Post $post): void
     {
         $tagsArray = explode(' ', $tags);
 

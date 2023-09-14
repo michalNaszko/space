@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Post
@@ -40,5 +41,14 @@ class Post extends Model
             $query
                 ->where('title', 'like', '%' . $search . '%')
                 ->orWhere('text', 'like', '%' . $search . '%'));
+
+
+        if ($filters['tag'] ?? false) {
+            $tagId = Tag::where('name', $filters['tag'])->first()->id;
+            $query
+                ->whereHas('tags', function($q) use ($tagId) {
+                    $q->where('tag_id', $tagId);
+                });
+        }
     }
 }
