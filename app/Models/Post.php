@@ -43,12 +43,15 @@ class Post extends Model
                 ->orWhere('text', 'like', '%' . $search . '%'));
 
 
-        if ($filters['tag'] ?? false) {
-            $tagId = Tag::where('name', $filters['tag'])->first()->id;
-            $query
-                ->whereHas('tags', function($q) use ($tagId) {
-                    $q->where('tag_id', $tagId);
+        if ($filters['tags'] ?? false) {
+            $tagIds = Tag::whereIn('name', $filters['tags'])->pluck('id');
+
+            foreach ($tagIds as $tagId) {
+                $query->whereHas('tags', function($subQuery) use ($tagId) {
+                        $subQuery->where('tag_id', $tagId);
                 });
+            }
+            Log::info("SQL query: " . $query->toSql());
         }
     }
 }

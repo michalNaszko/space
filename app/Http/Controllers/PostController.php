@@ -13,9 +13,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        Log::info('request: ' . request());
         return view('posts', [
-            'posts' => Post::latest()->filter(request(['search', 'tag']))->get()
+            'posts' => Post::latest()->filter(request(['search', 'tags']))->get()
         ]);
     }
 
