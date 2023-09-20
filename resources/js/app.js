@@ -6,6 +6,18 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import Vuetify from 'vuetify/lib/framework';
+
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+const vuetify = createVuetify({
+    components,
+    directives,
+})
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -13,10 +25,12 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({});
+const app = createApp({}).use(vuetify);
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import LoginRegisterComponent from "./components/LoginRegisterComponent.vue";
 app.component('example-component', ExampleComponent);
+app.component('login-register-component', LoginRegisterComponent);
 
 /**
  * The following block of code may be used to automatically register your
