@@ -1,51 +1,65 @@
 <template>
-    <div class="sidebar"
-         :data="backgroundColor">
+    <div class="sidebar">
 
         <div class="nav-menu">
-            <div class="logo">
-                <font-awesome-icon :icon="['fas', 'meteor']" class="icon fa-4x" />
-                <font-awesome-icon :icon="['fas', 'bars']" class="icon fa-4x mobile" />
+            <div class="logo"
+                 :data="backgroundColor">
+                <font-awesome-icon :icon="['fas', 'meteor']" :class="'icon ' + (!isMobile ? 'fa-4x' : 'fa-3x')" />
+                <font-awesome-icon @click="toggleMenu()" :icon="['fas', 'bars']" :class="'icon mobile ' + (!isMobile ? 'fa-4x' : 'fa-3x')" />
             </div>
 
-            <ul class="nav">
-                <li>
-                    <sidebar-link class="sidebarLink" to="/profile" icon="fa-solid fa-id-card" name="Profile"/>
-                </li>
-                <li>
-                <sidebar-link class="sidebarLink"  to="/post" icon="fa-solid fa-note-sticky" name="Posts"/>
-                </li>
-                <li>
-                    <sidebar-link class="sidebarLink" to="/users" icon="fa-solid fa-users" name="Users"/>
-                </li>
-                <li>
-                    <sidebar-link class="sidebarLink" to="/statistics" icon="fa-solid fa-chart-line" name="Statistics"/>
-                </li>
-                <li>
-                    <sidebar-link class="sidebarLink" to="/about" icon="fa-solid fa-info" name="About"/>
-                </li>
-            </ul>
+            <transition name="menu-fade" mode="out-in">
+                <ul class="nav" v-show="!isMobile || showMenu"
+                    :data="backgroundColor" >
+                    <li>
+                        <sidebar-link class="sidebarLink" to="/profile" icon="fa-solid fa-id-card" name="Profile" :mobile="isMobile"/>
+                    </li>
+                    <li>
+                    <sidebar-link class="sidebarLink"  to="/post" icon="fa-solid fa-note-sticky" name="Posts" :mobile="isMobile"/>
+                    </li>
+                    <li>
+                        <sidebar-link class="sidebarLink" to="/users" icon="fa-solid fa-users" name="Users" :mobile="isMobile"/>
+                    </li>
+                    <li>
+                        <sidebar-link class="sidebarLink" to="/statistics" icon="fa-solid fa-chart-line" name="Statistics" :mobile="isMobile"/>
+                    </li>
+                    <li>
+                        <sidebar-link class="sidebarLink" to="/about" icon="fa-solid fa-info" name="About" :mobile="isMobile"/>
+                    </li>
+                </ul>
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
-import { RouterLink } from 'vue-router'
 import SidebarLink from "@/js/components/Sidebar/SidebarLink.vue";
 export default {
     name: "sidebar",
+    data() {
+        return {
+            showMenu: false
+        }
+    },
     props: {
         backgroundColor: {
             type: String,
             default: "vue"
         },
-        sidebarLinks: {
-            type: Array,
-            default: () => []
-        },
     },
     components: {
         SidebarLink
+    },
+    computed: {
+        isMobile() {
+            return screen.width <= 768
+        }
+    },
+    methods: {
+        toggleMenu() {
+            console.log("toggleMenu")
+            this.showMenu = !this.showMenu
+        }
     }
 }
 </script>
@@ -63,9 +77,10 @@ export default {
     }
 
     .logo {
+        z-index: 2;
+        position: relative;
         border-bottom: 1px solid white;
-        padding: 15px 2px;
-        margin: 0 8px;
+        padding: 15px 15px;
         display: flex;
         flex-flow: row;
         justify-content: space-between;
@@ -76,6 +91,8 @@ export default {
     }
 
     .nav {
+        z-index: 1;
+        position: relative;
         display: flex;
         flex-direction: column;
         flex: 1 1 auto;
@@ -110,8 +127,29 @@ export default {
             height: fit-content;
         }
 
-        .nav {
-            display: none;
+        li {
+            border-bottom: 1px solid white;
+            margin: 0 25px;
+        }
+
+        li:first-of-type {
+            margin-top: 0;
+        }
+
+        li:last-of-type {
+            margin-top: 0;
+            padding: 5px 0;
+            border: none;
+        }
+
+        .menu-fade-enter-active,
+        .menu-fade-leave-active  {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-fade-enter-from,
+        .menu-fade-leave-to {
+            transform: translateY(-100%);
         }
     }
 
