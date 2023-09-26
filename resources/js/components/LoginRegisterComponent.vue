@@ -1,49 +1,55 @@
 <template>
-    <div> <!-- Container for login card -->
-        <div>{{ getAction() }}</div>
+    <div id="loginCardContainer" class="w-100 m-auto card"> <!-- Container for login card -->
+        <h1 class="h3 mb-3 fw-normal">{{ getAction() }}</h1>
 
         <form :action="getAction().toLowerCase()" @submit.prevent="performAction">
-            <div v-if="isRegister"> <!-- Container for username -->
-                <input v-model="form.username"
+            <div class="mb-3 text-start" v-if="isRegister"> <!-- Container for username -->
+                <label class="form-label mb-0" for="usernameInput">Username</label>
+                <input class="form-control" v-model="form.username"
                        type="text"
                        name="username"
                        id="usernameInput"
                        placeholder="John"
                 />
-                <label for="usernameInput">Username</label>
             </div>
 
-            <div> <!-- Container for email -->
-                <input v-model="form.email"
+            <div class="mb-3 text-start"> <!-- Container for email -->
+                <label class="form-label mb-0" for="emailInput">Email address</label>
+                <input class="form-control" v-model="form.email"
                        type="email"
                        name="email"
                        id="emailInput"
                        placeholder="name@example.com"
                 />
-                <label for="emailInput">Email address</label>
+
             </div>
 
-            <div> <!-- Container for password -->
-                <input v-model="form.password"
+            <div class="mb-3 text-start"> <!-- Container for password -->
+                <label class="form-label mb-0" for="passwordInput">Password</label>
+                <input class="form-control" v-model="form.password"
                        type="password"
                        name="password"
                        id="passwordInput"
                        placeholder="Password"
                 />
-                <label for="passwordInput">Password</label>
-                <a v-if="!isRegister" href="" @click.prevent="">Forgot password?</a>
+
+                <div class="text-end">
+                    <a class="text-end" v-if="!isRegister" href="" @click.prevent="">Forgot password?</a>
+                </div>
             </div>
 
-            <div v-if="form.isRegister"> <!-- Container for password confirmation -->
-                <input v-model="form.passwordConf"
+            <div class="mb-3 text-start" v-if="isRegister"> <!-- Container for password confirmation -->
+                <label class="form-label mb-0" for="passwordConfInput">Confirm Password</label>
+                <input class="form-control" v-model="form.passwordConf"
                        type="password"
                        name="passwordConf"
                        id="passwordConfInput"
                        placeholder="Password">
-                <label for="passwordConfInput">Password</label>
+
+                <div class="error">{{ errorMessage }}</div>
             </div>
 
-            <button type="submit">{{ getAction() }}</button>
+            <button :data="btnBackgroundColor" class="w-100 btn btn-lg mb-5" type="submit">{{ getAction() }}</button>
             <div>
                 <a href="" @click.prevent="isRegister = !isRegister">{{ getMessage() }}</a>
             </div>
@@ -59,6 +65,7 @@ export default {
     data() {
         return {
             isRegister: false,
+            errorMessage: "",
             form: {
                 username: "",
                 email: "",
@@ -112,14 +119,23 @@ export default {
                 });
         },
         register() {
-            // if(this.password == this.confirmPassword){
-            //     this.isRegister = false;
-            //     this.errorMessage = "";
-            //     this.$refs.form.reset();
-            // }
-            // else {
-            //     this.errorMessage = "password did not match"
-            // }
+            if(this.form.password === this.form.passwordConf){
+                axios.post("/" + this.getAction().toLowerCase(), {
+                    _token: this.csrf,
+                    username: this.username,
+                    email: this.form.email,
+                    password: this.form.password
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+            else {
+                this.errorMessage = "password did not match"
+            }
             console.log("Register request!!!");
         }
     },
@@ -127,6 +143,22 @@ export default {
         toggleMessage : function() {
             return this.isRegister ? this.stateObj.register.message : this.stateObj.login.message }
     },
-    props: ['csrf']
+    // props: ['csrf'],
+    props: {
+        csrf: "",
+        btnBackgroundColor: {
+            type: String,
+            default: "vue"
+        }
+    }
 };
 </script>
+
+<style>
+    #loginCardContainer {
+        max-width: 330px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+        padding: 15px;
+        border-radius: 2%;
+    }
+</style>

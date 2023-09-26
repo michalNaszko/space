@@ -18,6 +18,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
 Route::get('/', function () {
     return view('createPost');
 })->middleware('auth');

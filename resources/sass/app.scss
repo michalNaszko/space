@@ -6,3 +6,26 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+*[data="vue"]{
+    background-color: $vue;
+}
+
+button[data="vue"]{
+    background-color: $vue;
+    &:hover {
+        background-color: $vue-states;
+    }
+}
+
+.card {
+    background-color: $card-black-background;
+    color: white;
+    & a{
+       color: white;
+    }
+}
+
+#app {
+    background: linear-gradient($background-black, $background-states-black);
+}

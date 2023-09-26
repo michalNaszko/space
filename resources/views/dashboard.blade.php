@@ -3,7 +3,7 @@
 @section('content')
 
         <div id="app" class="text-center">
-            <login-register-component csrf="{{csrf_token()}}"></login-register-component>
+            <dashboard-component></dashboard-component>
         </div>
 
 
