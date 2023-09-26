@@ -9,67 +9,21 @@
             </div>
 
             <ul class="nav">
-                <router-link
-                    to="/profile"
-                    custom
-                    v-slot="{ href, route, navigate }"
-                >
-                    <li>
-                        <a :href="href" @click="navigate" title="Profile">
-                            <font-awesome-icon :icon="['fas', 'id-card']" class="icon fa-3x" />
-                        </a>
-                    </li>
-                </router-link>
-
-                <router-link
-                    to="/posts"
-                    custom
-                    v-slot="{ href, route, navigate }"
-                >
-                    <li>
-                        <a :href="href" @click="navigate" title="Posts">
-                            <font-awesome-icon :icon="['fas', 'note-sticky']" class="icon fa-3x" />
-                        </a>
-                    </li>
-                </router-link>
-
-                <router-link
-                    to="/users"
-                    custom
-                    v-slot="{ href, route, navigate }"
-                >
-                    <li>
-                        <a :href="href" @click="navigate" title="Users">
-                            <font-awesome-icon :icon="['fas', 'users']" class="icon fa-3x" />
-                        </a>
-                    </li>
-                </router-link>
-
-                <router-link
-                    to="/statistics"
-                    custom
-                    v-slot="{ href, route, navigate }"
-                >
-                    <li>
-                        <a :href="href" @click="navigate" title="Statistics">
-                            <font-awesome-icon :icon="['fas', 'chart-line']" class="icon fa-3x" />
-                        </a>
-                    </li>
-                </router-link>
-
-                <router-link
-                    to="/about"
-                    custom
-                    v-slot="{ href, route, navigate }"
-                >
-                    <li>
-                        <a :href="href" @click="navigate" title="About">
-                            <font-awesome-icon :icon="['fas', 'info']" class="icon fa-3x" />
-                        </a>
-                    </li>
-                </router-link>
-
-<!--                <sidebar-link to="/about" icon="fa-solid fa-info"/>-->
+                <li>
+                    <sidebar-link class="sidebarLink" to="/profile" icon="fa-solid fa-id-card" name="Profile"/>
+                </li>
+                <li>
+                <sidebar-link class="sidebarLink"  to="/post" icon="fa-solid fa-note-sticky" name="Posts"/>
+                </li>
+                <li>
+                    <sidebar-link class="sidebarLink" to="/users" icon="fa-solid fa-users" name="Users"/>
+                </li>
+                <li>
+                    <sidebar-link class="sidebarLink" to="/statistics" icon="fa-solid fa-chart-line" name="Statistics"/>
+                </li>
+                <li>
+                    <sidebar-link class="sidebarLink" to="/about" icon="fa-solid fa-info" name="About"/>
+                </li>
             </ul>
         </div>
     </div>

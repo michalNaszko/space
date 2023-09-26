@@ -4,11 +4,9 @@
         custom
         v-slot="{ href, route, navigate }"
     >
-        <li>
-            <a :href="href" @click="navigate" :title="name">
-                <font-awesome-icon :icon="icon" class="icon fa-3x" />
-            </a>
-        </li>
+        <a :href="href" @click="navigate" :title="name">
+            <font-awesome-icon :icon="icon" class="icon fa-3x" />
+        </a>
     </router-link>
 </template>
 
@@ -19,10 +17,12 @@ export default {
         to: String,
         name: String,
         icon: String
-    }
+    },
 }
 </script>
 
 <style scoped>
-
+    .icon {
+        color: white;
+    }
 </style>
