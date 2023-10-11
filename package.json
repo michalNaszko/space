@@ -3,7 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "watch": "vite build --watch --mode=development"
+        "watch": "vite build --watch"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
@@ -40,8 +40,7 @@
         "balanced-match": "^1.0.2",
         "binary-extensions": "^2.2.0",
         "bootstrap-vue": "^2.23.1",
-        "bootstrap-vue-3": "^0.5.1",
-        "bootstrap-vue-next": "^0.13.3",
+        "bootstrap-vue-next": "^0.14.8",
         "brace-expansion": "^1.1.11",
         "braces": "^3.0.2",
         "camelcase-css": "^2.0.1",

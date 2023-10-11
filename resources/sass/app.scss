@@ -2,10 +2,10 @@
 @import url('https://fonts.bunny.net/css?family=Nunito');
 
 // Variables
-@import 'variables';
+//@import 'variables';
 
 // Bootstrap
-@import 'bootstrap/scss/bootstrap';
+//@import 'bootstrap/scss/bootstrap';
 
 *[data="vue"]{
     background-color: $vue;
@@ -28,4 +28,8 @@ button[data="vue"]{
 
 #app {
     background: linear-gradient($background-black, $background-states-black);
+}
+
+*[data="card-black-background"] {
+    background-color: $card-black-background;
 }

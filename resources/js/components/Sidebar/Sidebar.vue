@@ -4,27 +4,27 @@
         <div class="nav-menu">
             <div class="logo"
                  :data="backgroundColor">
-                <font-awesome-icon :icon="['fas', 'meteor']" :class="'icon ' + (!isMobile ? 'fa-4x' : 'fa-3x')" />
-                <font-awesome-icon @click="toggleMenu()" :icon="['fas', 'bars']" :class="'icon mobile ' + (!isMobile ? 'fa-4x' : 'fa-3x')" />
+                <font-awesome-icon :icon="['fas', 'meteor']" :class="'icon ' + (!$isMobile() ? 'fa-4x' : 'fa-3x')" />
+                <font-awesome-icon @click="showMenuFlag = !showMenuFlag" :icon="['fas', 'bars']" :class="'icon mobile ' + (!isMobile ? 'fa-4x' : 'fa-3x')" />
             </div>
 
             <transition name="menu-fade" mode="out-in">
-                <ul class="nav" v-show="!isMobile || showMenu"
+                <ul class="nav" v-show="showMenu"
                     :data="backgroundColor" >
                     <li>
-                        <sidebar-link class="sidebarLink" to="/profile" icon="fa-solid fa-id-card" name="Profile" :mobile="isMobile"/>
+                        <sidebar-link to="/profile" icon="fa-solid fa-id-card" name="Profile" :mobile="$isMobile()"/>
                     </li>
                     <li>
-                    <sidebar-link class="sidebarLink"  to="/post" icon="fa-solid fa-note-sticky" name="Posts" :mobile="isMobile"/>
+                    <sidebar-link to="/post" icon="fa-solid fa-note-sticky" name="Posts" :mobile="$isMobile()"/>
                     </li>
                     <li>
-                        <sidebar-link class="sidebarLink" to="/users" icon="fa-solid fa-users" name="Users" :mobile="isMobile"/>
+                        <sidebar-link to="/users" icon="fa-solid fa-users" name="Users" :mobile="$isMobile()"/>
                     </li>
                     <li>
-                        <sidebar-link class="sidebarLink" to="/statistics" icon="fa-solid fa-chart-line" name="Statistics" :mobile="isMobile"/>
+                        <sidebar-link to="/statistics" icon="fa-solid fa-chart-line" name="Statistics" :mobile="$isMobile()"/>
                     </li>
                     <li>
-                        <sidebar-link class="sidebarLink" to="/about" icon="fa-solid fa-info" name="About" :mobile="isMobile"/>
+                        <sidebar-link to="/about" icon="fa-solid fa-info" name="About" :mobile="$isMobile()"/>
                     </li>
                 </ul>
             </transition>
@@ -38,8 +38,15 @@ export default {
     name: "sidebar",
     data() {
         return {
-            showMenu: false
+            showMenuFlag: false,
+            isMobile: false
         }
+    },
+    created() {
+        window.addEventListener("resize", this.myEventHandler);
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.myEventHandler);
     },
     props: {
         backgroundColor: {
@@ -50,21 +57,24 @@ export default {
     components: {
         SidebarLink
     },
-    computed: {
-        isMobile() {
-            return screen.width <= 768
+    methods: {
+        myEventHandler(e) {
+            console.log("Size changed! IsMobile: " + this.$isMobile() + " screen width: " + screen.width)
+            this.isMobile = this.$isMobile()
         }
     },
-    methods: {
-        toggleMenu() {
-            console.log("toggleMenu")
-            this.showMenu = !this.showMenu
+    computed: {
+        showMenu() {
+            console.log("showMenu")
+            let menuShowed = !this.$isMobile() || this.showMenuFlag
+            this.$emit('menuShowed', menuShowed)
+            return !this.$isMobile() || this.showMenuFlag
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .sidebar {
         height: 100%;
         width: fit-content;
@@ -98,24 +108,16 @@ export default {
         flex: 1 1 auto;
     }
 
-    li {
-        padding: 5px;
-    }
-
-    li:first-of-type {
-        margin-top: 10px;
-    }
-
     li:last-of-type {
         margin-top: auto;
-        padding-bottom: 40px;
+        margin-bottom: 40px;
     }
 
     .mobile {
         display: none;
     }
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-device-width: $max-width){
         .mobile {
             display: block;
             text-align: right;

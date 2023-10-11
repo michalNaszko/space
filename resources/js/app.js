@@ -7,6 +7,7 @@
 import './bootstrap';
 import '@/sass/app.scss';
 import { createApp } from 'vue';
+import isMobile from '@/js/plugins/isMobile'
 import {createRouter, createWebHistory} from 'vue-router'
 /* import font awesome icon component */
 /* import the fontawesome core */
@@ -75,7 +76,8 @@ const router = createRouter({
 const app = createApp({})
     .use(vuetify)
     .use(BootstrapVueNext)
-    .use(router);
+    .use(router)
+    .use(isMobile);
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import LoginRegisterComponent from "./components/LoginRegisterComponent.vue";

@@ -1,3 +1,9 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+// Media query
+$max-width: 768px;
+
 // Body
 $body-bg: #f8fafc;
 
@@ -13,3 +19,13 @@ $card-black-background:      #27293d !default;
 $background-black:           #1e1e2f !default;
 $background-states-black:    #1e1e24 !default;
 
+/* ----- begin bootstrap customization ----- */
+
+$table-hover-bg: $vue-states;
+
+@import "bootstrap";
+/* -----  end bootstrap customization  ----- */
+:root {
+    --bs-body-bg: $card-black-background;
+    --bs-emphasis-color: white;
+}

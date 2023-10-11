@@ -4,7 +4,10 @@
         custom
         v-slot="{ href, route, navigate }"
     >
-        <a :href="href" @click="navigate" :title="name">
+        <a :href="href" @click="navigate" :title="name"
+           @mouseover="hover = true"
+           @mouseleave="hover = false"
+           :class="{ active: hover }">
             <font-awesome-icon :icon="icon" :class="'icon ' + (!mobile ? 'fa-4x' : 'fa-3x')" />
             <h3 v-if="mobile">{{name}}</h3>
         </a>
@@ -13,6 +16,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            hover: false,
+        }
+    },
     name: "sidebar-link",
     props: {
         to: String,
@@ -23,13 +31,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     a {
         display: flex;
         flex-flow: row;
         justify-content: center;
         align-items: center;
         text-decoration: none;
+        padding: 5px;
 
         &:hover {
             background-color: $vue-states;
@@ -46,5 +55,9 @@ export default {
     .icon {
         color: white;
         flex: 1 1 0;
+    }
+
+    .active {
+        background-color: $vue-states;
     }
 </style>
