@@ -53,23 +53,24 @@ const Load = {
 }
 
 export default class Scrollable {
-    #n;
-    #scrollHeight;
-    #elementHeight;
-    #scrollTop;
+    n;
+    scrollHeight;
+    elementHeight;
+    scrollTop;
     constructor(clientHeight, scrollHeight, elementHeight, scrollTop) {
-        this.#n = clientHeight / elementHeight;
-        this.#scrollHeight = scrollHeight;
-        this.#elementHeight = elementHeight;
-        this.#scrollTop = scrollTop;
-        console.log("Before fetch!");
-        this.data = this.#fetchData(0, 3 * this.#n);
+        this.n = Math.ceil(clientHeight / elementHeight);
+        this.scrollHeight = scrollHeight;
+        this.elementHeight = elementHeight;
+        this.scrollTop = scrollTop;
+        this.data = this.fetchData(0, 3 * this.n);
+        this.event = new Event("dataLoaded");
     }
 
-    #fetchData(startIndex, endIndex) {
+    fetchData(startIndex, endIndex) {
         if (startIndex < 0 || endIndex < startIndex)
             return;
 
+        console.log("Inside fetch");
         console.log("startIndex: " + startIndex);
         console.log("endIndex: " + endIndex);
         console.log(dataBase.slice(startIndex, endIndex));
@@ -79,72 +80,69 @@ export default class Scrollable {
         });
     }
 
-    #whichDataLoad(scrollTop, topAtElementIdx) {
-        if (this.data[0].idx > 0 && topAtElementIdx <= this.#n / 2) {
+    whichDataLoad(scrollTop, topAtElementIdx) {
+        if (this.data[0].idx > 0 && topAtElementIdx <= this.n / 2) {
             return Load.prev;
         }
 
-        if (topAtElementIdx >= 3 * this.#n / 2) {
+        if (topAtElementIdx >= 3 * this.n / 2) {
             return Load.next;
         }
 
         return Load.none;
     }
 
-    #updateData(loadedData, loadDirection) {
+    updateData(loadedData, loadDirection) {
         let newData;
         if (loadDirection === Load.prev) {
-            newData = this.data.slice(0, this.data.length - this.#n / 2);
+            newData = this.data.slice(0, this.data.length - loadedData.length);
             newData = loadedData.concat(newData);
         }
 
         if (loadDirection === Load.next) {
-            newData = this.data.slice(this.#n / 2, this.data.length);
+            newData = this.data.slice(loadedData.length, this.data.length);
             newData = newData.concat(loadedData);
         }
 
         this.data = newData;
     }
 
-    #setScrollTop(loadDirection) {
+    setScrollTop(loadDirection) {
         if (loadDirection === Load.prev) {
-            this.#scrollTop += this.#elementHeight * this.#n / 2;
+            this.scrollTop += this.elementHeight * this.n / 2;
         }
         else if (loadDirection === Load.next) {
-            this.#scrollTop -= this.#elementHeight * this.#n / 2;
+            this.scrollTop -= this.elementHeight * this.n / 2;
         }
     }
 
     getItems() {
-        console.log(this.data);
-        return [...this.data].map(d => {
-            return d.data;
-        })
+        return this.data.map(d => JSON.parse(JSON.stringify(d.data)));
     }
 
     scroll(scrollTop) {
-        let topAtElementIdx = scrollTop / this.#elementHeight;
-        let dataToLoadDirection = this.#whichDataLoad(scrollTop, topAtElementIdx);
+        let topAtElementIdx = scrollTop / this.elementHeight;
+        let dataToLoadDirection = this.whichDataLoad(scrollTop, topAtElementIdx);
         let startIdx;
         let endIdx;
 
         switch (dataToLoadDirection) {
-            case Load.next:
-                startIdx = this.data[0].idx > this.#n / 2 ?
-                    this.data[0].idx - this.#n / 2 : 0;
-                endIdx = startIdx + this.#n / 2;
-                break;
             case Load.prev:
+                startIdx = this.data[0].idx - 1 > this.n / 2 ?
+                    this.data[0].idx - this.n / 2 : 0;
+                endIdx = this.data[0].idx;
+                break;
+            case Load.next:
                 startIdx = this.data.at(-1).idx + 1;
-                endIdx = startIdx - 1 + this.#n / 2;
+                endIdx = startIdx - 1 + this.n / 2;
                 break;
             default:
                 return;
         }
 
-        let loadedData = this.#fetchData(startIdx, endIdx);
-        this.#updateData(loadedData, dataToLoadDirection);
-        this.#setScrollTop(dataToLoadDirection);
+        let loadedData = this.fetchData(startIdx, endIdx);
+        this.updateData(loadedData, dataToLoadDirection);
+        this.setScrollTop(dataToLoadDirection);
     }
 }
 
