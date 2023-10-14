@@ -135,9 +135,9 @@ export default class Scrollable {
         return this.data.map(d => JSON.parse(JSON.stringify(d.data)));
     }
 
-    scroll(scrollTop) {
-        let topAtElementIdx = scrollTop / this.elementHeight;
-        let dataToLoadDirection = this.whichDataLoad(scrollTop, topAtElementIdx);
+    scroll() {
+        let topAtElementIdx = this.tableScroll.scrollTop / this.elementHeight;
+        let dataToLoadDirection = this.whichDataLoad(this.tableScroll.scrollTop , topAtElementIdx);
         let startIdx;
         let endIdx;
 

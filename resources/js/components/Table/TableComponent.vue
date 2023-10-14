@@ -1,7 +1,7 @@
 <template>
     <div class="tableContainer">
         <div class="tableCard" data="card-black-background">
-            <div class="tableDiv" ref="table-div" @scroll.passive="onScroll">
+            <div class="tableDiv" ref="table-div" @scroll.passive="onScroll" @scrollend="onScroll">
                 <b-table hover bordered no-border-collapse show-empty :items="items"></b-table>
             </div>
         </div>
@@ -16,30 +16,12 @@ export default {
     data() {
         return {
             scrollTable: null,
-            items: [
-                { age: 40, first_name: '__Dickerson', last_name: 'Macdonald' },
-                { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                { age: 38, first_name: 'Jami', last_name: 'Carney' },
-                { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                { age: 38, first_name: 'Jami', last_name: 'Carney' },
-                { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                { age: 38, first_name: 'Jami', last_name: 'Carney' },
-                { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-                { age: 38, first_name: 'Jami', last_name: 'Carney' },
-            ]
+            items: []
         }
     },
     methods: {
         onScroll() {
-            const tableScroll = this.$refs["table-div"];
-            this.scrollTable.scroll(tableScroll.scrollTop);
+            this.scrollTable.scroll();
             console.log("Scroll!");
             console.log(document.getElementsByTagName("td")[0].offsetHeight);
         }
