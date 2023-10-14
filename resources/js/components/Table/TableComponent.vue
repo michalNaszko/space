@@ -22,17 +22,11 @@ export default {
     methods: {
         onScroll() {
             this.scrollTable.scroll();
-            console.log("Scroll!");
-            console.log(document.getElementsByTagName("td")[0].offsetHeight);
         }
     },
     mounted() {
         try {
             const tableScroll = this.$refs["table-div"];
-            console.log("clientHeight: " + tableScroll.clientHeight);
-            console.log("scrollHeight: " + tableScroll.scrollHeight);
-            console.log("offsetHeight: " + document.getElementsByTagName("td")[0].offsetHeight);
-            console.log("scrollTop: " + tableScroll.scrollTop);
             this.scrollTable = new Scrollable(
                 tableScroll,
                 document.getElementsByTagName("td")[0].offsetHeight,
@@ -45,8 +39,6 @@ export default {
                 },
                 false,
             );
-            console.log("items after Scrollable constructor:");
-            console.log(this.items);
             this.items = this.scrollTable.getItems();
         } catch (e) {
             console.log(e);
