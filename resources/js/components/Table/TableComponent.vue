@@ -51,13 +51,21 @@ export default {
             console.log("scrollHeight: " + tableScroll.scrollHeight);
             console.log("offsetHeight: " + document.getElementsByTagName("td")[0].offsetHeight);
             console.log("scrollTop: " + tableScroll.scrollTop);
-            this.scrollTable = new Scrollable(tableScroll.clientHeight,
-                tableScroll.scrollHeight,
+            this.scrollTable = new Scrollable(
+                tableScroll,
                 document.getElementsByTagName("td")[0].offsetHeight,
-                tableScroll.scrollTop);
-            console.log("items:");
-            this.items = this.scrollTable.getItems()
-            console.log(itemsTmp);
+                this.items
+            );
+            tableScroll.addEventListener(
+                "dataLoaded",
+                (e) => {
+                    this.items = this.scrollTable.getItems();
+                },
+                false,
+            );
+            console.log("items after Scrollable constructor:");
+            console.log(this.items);
+            this.items = this.scrollTable.getItems();
         } catch (e) {
             console.log(e);
         }

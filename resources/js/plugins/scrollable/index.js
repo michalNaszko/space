@@ -44,6 +44,20 @@ const dataBase = [
     { age: 43, first_name: 'Larsen', last_name: 'Shaw' },
     { age: 44, first_name: 'Geneva', last_name: 'Wilson' },
     { age: 45, first_name: 'Jami', last_name: 'Carney' },
+    { age: 46, first_name: 'Jami', last_name: 'Carney' },
+    { age: 47, first_name: 'Jami', last_name: 'Carney' },
+    { age: 48, first_name: 'Dickerson', last_name: 'Macdonald' },
+    { age: 49, first_name: 'Larsen', last_name: 'Shaw' },
+    { age: 50, first_name: 'Geneva', last_name: 'Wilson' },
+    { age: 51, first_name: 'Jami', last_name: 'Carney' },
+    { age: 52, first_name: 'Dickerson', last_name: 'Macdonald' },
+    { age: 53, first_name: 'Larsen', last_name: 'Shaw' },
+    { age: 54, first_name: 'Geneva', last_name: 'Wilson' },
+    { age: 55, first_name: 'Jami', last_name: 'Carney' },
+    { age: 56, first_name: 'Dickerson', last_name: 'Macdonald' },
+    { age: 57, first_name: 'Larsen', last_name: 'Shaw' },
+    { age: 58, first_name: 'Geneva', last_name: 'Wilson' },
+    { age: 59, first_name: 'Jami', last_name: 'Carney' },
 ];
 
 const Load = {
@@ -57,23 +71,20 @@ export default class Scrollable {
     scrollHeight;
     elementHeight;
     scrollTop;
-    constructor(clientHeight, scrollHeight, elementHeight, scrollTop) {
-        this.n = Math.ceil(clientHeight / elementHeight);
-        this.scrollHeight = scrollHeight;
+    constructor(tableScroll, elementHeight, items) {
+        this.tableScroll = tableScroll;
+        this.n = Math.ceil(tableScroll.clientHeight / elementHeight);
+        this.scrollHeight = tableScroll.scrollHeight;
         this.elementHeight = elementHeight;
-        this.scrollTop = scrollTop;
+        this.scrollTop = tableScroll.scrollTop;
         this.data = this.fetchData(0, 3 * this.n);
         this.event = new Event("dataLoaded");
+        items.Target = dataBase.slice();
     }
 
     fetchData(startIndex, endIndex) {
         if (startIndex < 0 || endIndex < startIndex)
             return;
-
-        console.log("Inside fetch");
-        console.log("startIndex: " + startIndex);
-        console.log("endIndex: " + endIndex);
-        console.log(dataBase.slice(startIndex, endIndex));
 
         return dataBase.slice(startIndex, endIndex).map((d, idx) => {
             return  {idx: startIndex+idx, data: d};
@@ -93,18 +104,22 @@ export default class Scrollable {
     }
 
     updateData(loadedData, loadDirection) {
-        let newData;
-        if (loadDirection === Load.prev) {
-            newData = this.data.slice(0, this.data.length - loadedData.length);
-            newData = loadedData.concat(newData);
-        }
+        if (loadedData.length)
+        {
+            let newData;
+            if (loadDirection === Load.prev) {
+                newData = this.data.slice(0, this.data.length - loadedData.length);
+                newData = loadedData.concat(newData);
+            }
 
-        if (loadDirection === Load.next) {
-            newData = this.data.slice(loadedData.length, this.data.length);
-            newData = newData.concat(loadedData);
-        }
+            if (loadDirection === Load.next) {
+                newData = this.data.slice(loadedData.length, this.data.length);
+                newData = newData.concat(loadedData);
+            }
 
-        this.data = newData;
+            this.data = newData;
+            this.tableScroll.dispatchEvent(this.event);
+        }
     }
 
     setScrollTop(loadDirection) {
