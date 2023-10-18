@@ -1,9 +1,9 @@
 <template>
     <div class="tableContainer">
         <div class="tableCard" data="card-black-background">
-            <div class="tableDiv" ref="table-div" @scroll.passive="onScroll" @scrollend="onScroll">
-                <b-table hover bordered no-border-collapse show-empty :items="items"></b-table>
-            </div>
+            <ScrollableComponent ref="scrollTable" class="tableDiv">
+                <b-table-extension />
+            </ScrollableComponent>
         </div>
     </div>
 </template>
@@ -11,12 +11,16 @@
 <script>
 import Scrollable from "@/js/plugins/scrollable";
 import "@/js/plugins/scrollable/index"
+import ScrollableComponent from "@/js/components/Scrollable/ScrollableComponent.vue";
+import BTableExtension from "@/js/components/Table/BTableExtension.vue";
 export default {
     name: "table-component",
+    components: {BTableExtension, ScrollableComponent},
     data() {
         return {
             scrollTable: null,
-            items: []
+            items: [{ age: 1, first_name: 'Dickerson', last_name: 'Macdonald' },
+                    { age: 1, first_name: 'Dickerson', last_name: 'Macdonald' }]
         }
     },
     methods: {
@@ -25,25 +29,12 @@ export default {
         }
     },
     mounted() {
-        try {
-            const tableScroll = this.$refs["table-div"];
-            this.scrollTable = new Scrollable(
-                tableScroll,
-                document.getElementsByTagName("td")[0].offsetHeight,
-                this.items
-            );
-            tableScroll.addEventListener(
-                "dataLoaded",
-                (e) => {
-                    this.items = this.scrollTable.getItems();
-                },
-                false,
-            );
-            this.items = this.scrollTable.getItems();
-        } catch (e) {
-            console.log(e);
-        }
-
+        console.log("Mounted TableComponent");
+        console.log(document.getElementsByTagName("td")[0].offsetHeight);
+        this.$refs["scrollTable"].initialize(
+           40
+        );
+        this.items = this.$refs["scrollTable"].items;
     }
 }
 </script>

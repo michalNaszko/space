@@ -81,7 +81,8 @@ export default class Scrollable {
     scrollHeight;
     elementHeight;
     scrollTop;
-    constructor(tableScroll, elementHeight, items) {
+
+    initialize(tableScroll, elementHeight) {
         this.tableScroll = tableScroll;
         this.n = Math.ceil(tableScroll.clientHeight / elementHeight);
         this.scrollHeight = tableScroll.scrollHeight;
@@ -89,7 +90,6 @@ export default class Scrollable {
         this.scrollTop = tableScroll.scrollTop;
         this.data = this.fetchData(0, 3 * this.n);
         this.event = new Event("dataLoaded");
-        items.Target = dataBase.slice();
     }
 
     fetchData(startIndex, endIndex) {
