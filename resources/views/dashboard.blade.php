@@ -1,10 +1,10 @@
-@extends('layouts.loginRegister')
+@extends('layouts.base')
 
 @section('content')
 
-        <div id="app" class="text-center">
-            <dashboard-component></dashboard-component>
-        </div>
+    <div id="app" class="text-center">
+        <dashboard-component></dashboard-component>
+    </div>
 
 
 

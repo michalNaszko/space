@@ -25,6 +25,8 @@ import { faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { faInfo } from '@fortawesome/free-solid-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
+import App from './components/App.vue'
+
 /* add icons to the library */
 library.add(faMeteor)
 library.add(faIdCard)
@@ -54,26 +56,13 @@ const vuetify = createVuetify({
     directives,
 })
 
-const routes = [
-    {
-        path: '/',
-        name: 'Login',
-        component: LoginRegisterComponent
-    }
-]
-
-const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
-})
-
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
  */
 
-const app = createApp({})
+const app = createApp(App)
     .use(vuetify)
     .use(BootstrapVueNext)
     .use(router)
@@ -83,6 +72,7 @@ import ExampleComponent from './components/ExampleComponent.vue';
 import LoginRegisterComponent from "./components/LoginRegisterComponent.vue";
 import Sidebar from "@/js/components/Sidebar/Sidebar.vue";
 import Dashboard from "@/js/components/Dashboard.vue";
+import router from "@/js/router";
 
 app.component('example-component', ExampleComponent);
 app.component('login-register-component', LoginRegisterComponent);

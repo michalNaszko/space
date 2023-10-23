@@ -18,34 +18,38 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//});
+//
+//Route::get('/', function () {
+//    return view('createPost');
+//})->middleware('auth');
+//Route::post('/createPost', [PostController::class, 'create'])->middleware('auth');;
+//Route::get('/updatePost', function () {
+//    return view('updatePost');
+//})->middleware('auth');
+//Route::post('/updatePost', [PostController::class, 'update']);
+//
+//Route::get('/login', [LoginController::class, 'show']);
+//Route::post('/login', [LoginController::class, 'login'] );
+//
+//Route::get('/register', [RegisterController::class, 'show']);
+//Route::post('/register', [RegisterController::class, 'register']);
+//
+//Route::get('/logout', function (Request $request) {
+//    Auth::logout();
+//
+//    $request->session()->invalidate();
+//    $request->session()->regenerateToken();
+//
+//    return redirect('/');
+//});
+//
+//Route::get('/posts',
+//    [PostController::class, 'index'])->middleware('auth');
 
 Route::get('/', function () {
-    return view('createPost');
-})->middleware('auth');
-Route::post('/createPost', [PostController::class, 'create'])->middleware('auth');;
-Route::get('/updatePost', function () {
-    return view('updatePost');
-})->middleware('auth');
-Route::post('/updatePost', [PostController::class, 'update']);
-
-Route::get('/login', [LoginController::class, 'show']);
-Route::post('/login', [LoginController::class, 'login'] );
-
-Route::get('/register', [RegisterController::class, 'show']);
-Route::post('/register', [RegisterController::class, 'register']);
-
-Route::get('/logout', function (Request $request) {
-    Auth::logout();
-
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return redirect('/');
+    return view('app');
 });
-
-Route::get('/posts',
-    [PostController::class, 'index'])->middleware('auth');
 

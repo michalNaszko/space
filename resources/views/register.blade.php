@@ -1,4 +1,4 @@
-@extends('layouts.loginRegister')
+@extends('layouts.base')
 
 @section('content')
     <form action="register" method="POST">
