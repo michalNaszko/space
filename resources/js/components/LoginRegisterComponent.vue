@@ -122,7 +122,7 @@ export default {
             if(this.form.password === this.form.passwordConf){
                 axios.post("/" + this.getAction().toLowerCase(), {
                     _token: this.csrf,
-                    username: this.username,
+                    name: this.form.username,
                     email: this.form.email,
                     password: this.form.password
                 })
