@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 Route::get('/', function () {
     return view('createPost');
 })->middleware('auth');
-Route::post('/createPost', [PostController::class, 'create']);
+Route::post('/createPost', [PostController::class, 'create'])->middleware('auth');;
 Route::get('/updatePost', function () {
     return view('updatePost');
 })->middleware('auth');
@@ -49,7 +49,3 @@ Route::get('/logout', function (Request $request) {
 Route::get('/posts',
     [PostController::class, 'index'])->middleware('auth');
 
-
-//Auth::routes();
-//
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
