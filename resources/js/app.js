@@ -7,6 +7,7 @@
 import './bootstrap';
 import '@/sass/app.scss';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import isMobile from '@/js/plugins/isMobile'
 import {createRouter, createWebHistory} from 'vue-router'
 /* import font awesome icon component */
@@ -66,7 +67,8 @@ const app = createApp(App)
     .use(vuetify)
     .use(BootstrapVueNext)
     .use(router)
-    .use(isMobile);
+    .use(isMobile)
+    .use(createPinia());
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import LoginRegisterComponent from "./components/LoginRegisterComponent.vue";

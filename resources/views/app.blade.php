@@ -16,7 +16,8 @@
 
 <style>
     html,
-    body {
+    body,
+    #app {
         height: 100%;
     }
 </style>

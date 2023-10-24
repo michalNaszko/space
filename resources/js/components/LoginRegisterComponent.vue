@@ -1,59 +1,61 @@
 <template>
-    <div id="loginCardContainer" class="w-100 m-auto card"> <!-- Container for login card -->
-        <h1 class="h3 mb-3 fw-normal">{{ getAction() }}</h1>
+    <div id="loginPage">
+        <div id="loginCardContainer" class="w-100 m-auto card"> <!-- Container for login card -->
+            <h1 class="h3 mb-3 fw-normal">{{ getAction() }}</h1>
 
-        <form :action="getAction().toLowerCase()" @submit.prevent="performAction">
-            <div class="mb-3 text-start" v-if="isRegister"> <!-- Container for username -->
-                <label class="form-label mb-0" for="usernameInput">Username</label>
-                <input class="form-control" v-model="form.username"
-                       type="text"
-                       name="username"
-                       id="usernameInput"
-                       placeholder="John"
-                />
-            </div>
-
-            <div class="mb-3 text-start"> <!-- Container for email -->
-                <label class="form-label mb-0" for="emailInput">Email address</label>
-                <input class="form-control" v-model="form.email"
-                       type="email"
-                       name="email"
-                       id="emailInput"
-                       placeholder="name@example.com"
-                />
-
-            </div>
-
-            <div class="mb-3 text-start"> <!-- Container for password -->
-                <label class="form-label mb-0" for="passwordInput">Password</label>
-                <input class="form-control" v-model="form.password"
-                       type="password"
-                       name="password"
-                       id="passwordInput"
-                       placeholder="Password"
-                />
-
-                <div class="text-end">
-                    <a class="text-end" v-if="!isRegister" href="" @click.prevent="">Forgot password?</a>
+            <form :action="getAction().toLowerCase()" @submit.prevent="performAction">
+                <div class="mb-3 text-start" v-if="isRegister"> <!-- Container for username -->
+                    <label class="form-label mb-0" for="usernameInput">Username</label>
+                    <input class="form-control" v-model="form.username"
+                           type="text"
+                           name="username"
+                           id="usernameInput"
+                           placeholder="John"
+                    />
                 </div>
-            </div>
 
-            <div class="mb-3 text-start" v-if="isRegister"> <!-- Container for password confirmation -->
-                <label class="form-label mb-0" for="passwordConfInput">Confirm Password</label>
-                <input class="form-control" v-model="form.passwordConf"
-                       type="password"
-                       name="passwordConf"
-                       id="passwordConfInput"
-                       placeholder="Password">
+                <div class="mb-3 text-start"> <!-- Container for email -->
+                    <label class="form-label mb-0" for="emailInput">Email address</label>
+                    <input class="form-control" v-model="form.email"
+                           type="email"
+                           name="email"
+                           id="emailInput"
+                           placeholder="name@example.com"
+                    />
 
-                <div class="error">{{ errorMessage }}</div>
-            </div>
+                </div>
 
-            <button :data="btnBackgroundColor" class="w-100 btn btn-lg mb-5" type="submit">{{ getAction() }}</button>
-            <div>
-                <a href="" @click.prevent="isRegister = !isRegister">{{ getMessage() }}</a>
-            </div>
-        </form>
+                <div class="mb-3 text-start"> <!-- Container for password -->
+                    <label class="form-label mb-0" for="passwordInput">Password</label>
+                    <input class="form-control" v-model="form.password"
+                           type="password"
+                           name="password"
+                           id="passwordInput"
+                           placeholder="Password"
+                    />
+
+                    <div class="text-end">
+                        <a class="text-end" v-if="!isRegister" href="" @click.prevent="">Forgot password?</a>
+                    </div>
+                </div>
+
+                <div class="mb-3 text-start" v-if="isRegister"> <!-- Container for password confirmation -->
+                    <label class="form-label mb-0" for="passwordConfInput">Confirm Password</label>
+                    <input class="form-control" v-model="form.passwordConf"
+                           type="password"
+                           name="passwordConf"
+                           id="passwordConfInput"
+                           placeholder="Password">
+
+                    <div class="error">{{ errorMessage }}</div>
+                </div>
+
+                <button :data="btnBackgroundColor" class="w-100 btn btn-lg mb-5" type="submit">{{ getAction() }}</button>
+                <div>
+                    <a href="" @click.prevent="isRegister = !isRegister">{{ getMessage() }}</a>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -155,6 +157,12 @@ export default {
 </script>
 
 <style>
+    #loginPage {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
     #loginCardContainer {
         max-width: 330px;
         box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
