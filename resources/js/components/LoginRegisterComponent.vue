@@ -108,8 +108,9 @@ export default {
             // const { username } = this;
             // this.$router.replace({ name: "dashboard", params: { username: username } });
             console.log("Login request!!!");
+            console.log("_token: " + document.querySelector('meta[name="csrf-token"]').content)
             axios.post("/" + this.getAction().toLowerCase(), {
-                _token: this.csrf,
+                _token: document.querySelector('meta[name="csrf-token"]').content,
                 email: this.form.email,
                 password: this.form.password
             })
@@ -123,7 +124,7 @@ export default {
         register() {
             if(this.form.password === this.form.passwordConf){
                 axios.post("/" + this.getAction().toLowerCase(), {
-                    _token: this.csrf,
+                    _token: document.querySelector('meta[name="csrf-token"]').content,
                     name: this.form.username,
                     email: this.form.email,
                     password: this.form.password
@@ -145,9 +146,7 @@ export default {
         toggleMessage : function() {
             return this.isRegister ? this.stateObj.register.message : this.stateObj.login.message }
     },
-    // props: ['csrf'],
     props: {
-        csrf: "",
         btnBackgroundColor: {
             type: String,
             default: "vue"
