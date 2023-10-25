@@ -6,7 +6,7 @@
 
 import './bootstrap';
 import '@/sass/app.scss';
-import { createApp } from 'vue';
+import { createApp, markRaw } from 'vue';
 import { createPinia } from 'pinia';
 import isMobile from '@/js/plugins/isMobile'
 import {createRouter, createWebHistory} from 'vue-router'
@@ -59,6 +59,10 @@ const vuetify = createVuetify({
 
 const pinia = createPinia()
 
+pinia.use(({ store }) => {
+    store.router = markRaw(router)
+})
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -68,8 +72,8 @@ const pinia = createPinia()
 const app = createApp(App)
     .use(vuetify)
     .use(BootstrapVueNext)
-    .use(pinia)
     .use(router)
+    .use(pinia)
     .use(isMobile);
 
 import ExampleComponent from './components/ExampleComponent.vue';
