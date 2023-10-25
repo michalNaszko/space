@@ -2,7 +2,7 @@
  * https://jasonwatmore.com/post/2022/05/26/vue-3-pinia-jwt-authentication-tutorial-example
  */
 
-import { useAuthStore } from '@/stores';
+import {useAuthStore} from "@/js/stores/auth.store";
 
 export const fetchWrapper = {
     get: request('GET'),

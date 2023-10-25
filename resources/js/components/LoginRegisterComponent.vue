@@ -61,6 +61,7 @@
 
 <script>
 import axios from "axios";
+import {useAuthStore} from "@/js/stores/auth.store";
 
 export default {
     name: "App",
@@ -93,8 +94,7 @@ export default {
         getAction() {
             return  this.isRegister ? this.stateObj.register.name : this.stateObj.login.name;
         },
-        performAction(e) {
-            console.log(e);
+        performAction() {
             if (this.isRegister)
             {
                 this.register()
@@ -104,22 +104,23 @@ export default {
                 this.login()
             }
         },
-        login(e) {
-            // const { username } = this;
-            // this.$router.replace({ name: "dashboard", params: { username: username } });
-            console.log("Login request!!!");
-            console.log("_token: " + document.querySelector('meta[name="csrf-token"]').content)
-            axios.post("/" + this.getAction().toLowerCase(), {
-                _token: document.querySelector('meta[name="csrf-token"]').content,
-                email: this.form.email,
-                password: this.form.password
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+        login() {
+            const authStore = useAuthStore();
+            const _token = document.querySelector('meta[name="csrf-token"]').content;
+
+            return authStore.login(this.form.email, this.form.password, _token)
+                .catch(error => console.log(error));
+            // axios.post("/" + this.getAction().toLowerCase(), {
+            //     _token: document.querySelector('meta[name="csrf-token"]').content,
+            //     email: this.form.email,
+            //     password: this.form.password
+            // })
+            //     .then(function (response) {
+            //         console.log(response);
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error);
+            //     });
         },
         register() {
             if(this.form.password === this.form.passwordConf){
@@ -139,7 +140,6 @@ export default {
             else {
                 this.errorMessage = "password did not match"
             }
-            console.log("Register request!!!");
         }
     },
     computed: {

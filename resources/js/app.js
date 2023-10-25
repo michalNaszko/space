@@ -57,6 +57,8 @@ const vuetify = createVuetify({
     directives,
 })
 
+const pinia = createPinia()
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -66,9 +68,9 @@ const vuetify = createVuetify({
 const app = createApp(App)
     .use(vuetify)
     .use(BootstrapVueNext)
+    .use(pinia)
     .use(router)
-    .use(isMobile)
-    .use(createPinia());
+    .use(isMobile);
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import LoginRegisterComponent from "./components/LoginRegisterComponent.vue";
