@@ -104,14 +104,26 @@ export default {
                 this.login()
             }
         },
-        login() {
+        async login() {
             const authStore = useAuthStore();
-            const _token = document.querySelector('meta[name="csrf-token"]').content;
 
-            return authStore.login(this.form.email, this.form.password, _token)
+
+            // if (!getCsrf.ok) {
+            //     throw new Error("Faild to set csrf token");
+            // }
+            //
+            // let csrfToken = $cookies.get("XSRF-TOKEN");
+            // console.log("Before cookie read!");
+            // console.log("getCsrf", csrfToken);
+
+
+
+            return authStore.login(this.form.email, this.form.password)
                 .catch(error => console.log(error));
-            // axios.post("/" + this.getAction().toLowerCase(), {
-            //     _token: document.querySelector('meta[name="csrf-token"]').content,
+
+
+
+            // axios.post("/api/" + this.getAction().toLowerCase(), {
             //     email: this.form.email,
             //     password: this.form.password
             // })

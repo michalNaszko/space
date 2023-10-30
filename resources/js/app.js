@@ -9,6 +9,7 @@ import '@/sass/app.scss';
 import { createApp, markRaw } from 'vue';
 import { createPinia } from 'pinia';
 import isMobile from '@/js/plugins/isMobile'
+import VueCookies from 'vue-cookies'
 import {createRouter, createWebHistory} from 'vue-router'
 /* import font awesome icon component */
 /* import the fontawesome core */
@@ -70,6 +71,7 @@ pinia.use(({ store }) => {
  */
 
 const app = createApp(App)
+    .use(VueCookies)
     .use(vuetify)
     .use(BootstrapVueNext)
     .use(router)

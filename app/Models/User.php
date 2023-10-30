@@ -43,4 +43,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get existing or make new access token
+     */
+    public function makeApiToken(): string
+    {
+        return $this->createToken('api')->plainTextToken;
+    }
 }

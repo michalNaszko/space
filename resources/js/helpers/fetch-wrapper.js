@@ -1,4 +1,4 @@
-/* This code is from the great tutorial:
+/* This code is modified from the great tutorial:
  * https://jasonwatmore.com/post/2022/05/26/vue-3-pinia-jwt-authentication-tutorial-example
  */
 
@@ -11,18 +11,28 @@ export const fetchWrapper = {
     delete: request('DELETE')
 };
 
-function request(method) {
-    return (url, body) => {
+async function request(method) {
+    return async (url, body) => {
+        await loadXSRF_Token();
+
         const requestOptions = {
             method,
-            headers: authHeader(url)
+            credentials: 'include',
+            headers: header(url),
         };
         if (body) {
             requestOptions.headers['Content-Type'] = 'application/json';
             requestOptions.body = JSON.stringify(body);
         }
+        console.log(requestOptions.headers);
         return fetch(url, requestOptions).then(handleResponse);
     }
+}
+
+function header(url) {
+    let reqHeader = authHeader(url);
+    reqHeader["X-XSRF-TOKEN"] = $cookies.get("XSRF-TOKEN");
+    return reqHeader;
 }
 
 // helper functions
@@ -55,4 +65,17 @@ function handleResponse(response) {
 
         return data;
     });
+}
+
+async function loadXSRF_Token () {
+    if (!$cookies.get("XSRF-TOKEN")){
+        let ret = await fetch("/sanctum/csrf-cookie", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: 'include'
+        });
+        console.log(ret);
+    }
 }

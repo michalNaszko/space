@@ -119,6 +119,7 @@
         "ts-interface-checker": "^0.1.13",
         "util-deprecate": "^1.0.2",
         "vite-plugin-full-reload": "^1.0.5",
+        "vue-cookies": "^1.8.3",
         "vue-router": "^4.0.13",
         "vuetify": "^3.3.16",
         "wrappy": "^1.0.2",

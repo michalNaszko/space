@@ -12,8 +12,8 @@ export const useAuthStore = defineStore({
         returnUrl: null
     }),
     actions: {
-        async login(username, password, _token) {
-            const user = await fetchWrapper.post(`/login`, { username, password, _token });
+        async login(username, password) {
+            const user =  (await fetchWrapper.post)(`api/login`, { email: username, password: password });
 
             // update pinia state
             this.user = user;
@@ -23,7 +23,6 @@ export const useAuthStore = defineStore({
 
             // redirect to previous url or default to home page
             this.router.push(this.returnUrl || '/');
-            // router.push(this.returnUrl || '/');
         },
         logout() {
             this.user = null;

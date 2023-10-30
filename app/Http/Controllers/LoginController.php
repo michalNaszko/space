@@ -16,10 +16,10 @@ class LoginController extends Controller
      * Authenticate user.
      *
      * @param LoginRequest $request
-     * @return void
+     * @return array
      * @throws ValidationException
      */
-    private function authenticate(LoginRequest $request) : void
+    private function authenticate(LoginRequest $request): array
     {
         $credentials = $request->getCredentials();
 
@@ -31,6 +31,8 @@ class LoginController extends Controller
 
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
         Auth::login($user);
+
+        return ['token' => $user->makeApiToken()];
     }
 
     /**
@@ -48,13 +50,12 @@ class LoginController extends Controller
      *
      * @param LoginRequest $request
      *
-     * @return RedirectResponse|Redirector
+     * @return array
      * @throws ValidationException
      */
-    public function login(LoginRequest $request): RedirectResponse|Redirector
+    public function login(LoginRequest $request): array
     {
-        $this->authenticate($request);
-        return redirect('/');
+        return $this->authenticate($request);
     }
 
 }
