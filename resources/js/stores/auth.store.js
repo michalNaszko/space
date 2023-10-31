@@ -3,7 +3,7 @@
  */
 
 import { defineStore } from 'pinia'
-import {fetchWrapper} from "@/js/helpers/fetch-wrapper";
+import {requestWrapper} from "@/js/helpers/requests/fetch-wrapper";
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -13,7 +13,7 @@ export const useAuthStore = defineStore({
     }),
     actions: {
         async login(username, password) {
-            const user =  (await fetchWrapper.post)(`api/login`, { email: username, password: password });
+            const user =  (await requestWrapper.post)(`api/login`, { email: username, password: password });
 
             // update pinia state
             this.user = user;

@@ -3,8 +3,9 @@
  */
 
 import {useAuthStore} from "@/js/stores/auth.store";
+import {handleResponse, loadXSRF_Token} from "@/js/helpers/requests/common"
 
-export const fetchWrapper = {
+export const requestWrapper = {
     get: request('GET'),
     post: request('POST'),
     put: request('PUT'),
@@ -45,37 +46,5 @@ function authHeader(url) {
         return { Authorization: `Bearer ${user.token}` };
     } else {
         return {};
-    }
-}
-
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-
-        if (!response.ok) {
-            const { user } = useAuthStore();
-            if ([401, 403].includes(response.status) && user) {
-                // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                user.logout();
-            }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
-}
-
-async function loadXSRF_Token () {
-    if (!$cookies.get("XSRF-TOKEN")){
-        let ret = await fetch("/sanctum/csrf-cookie", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: 'include'
-        });
-        console.log(ret);
     }
 }
