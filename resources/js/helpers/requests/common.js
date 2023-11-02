@@ -35,7 +35,7 @@ function processResponse(response, text) {
         data = response.data;
     }
 
-    if (!response.ok) {
+    if (response.statusText !== 'OK') {
         const { user } = useAuthStore();
         if ([401, 403].includes(response.status) && user) {
             // auto logout if 401 Unauthorized or 403 Forbidden response returned from api

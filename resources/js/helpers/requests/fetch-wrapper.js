@@ -5,14 +5,14 @@
 import {useAuthStore} from "@/js/stores/auth.store";
 import {handleResponse, loadXSRF_Token} from "@/js/helpers/requests/common"
 
-export const requestWrapper = {
+export const requestWrapperFetch = {
     get: request('GET'),
     post: request('POST'),
     put: request('PUT'),
     delete: request('DELETE')
 };
 
-async function request(method) {
+function request(method) {
     return async (url, body) => {
         await loadXSRF_Token();
 
