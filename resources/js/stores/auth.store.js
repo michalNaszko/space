@@ -7,10 +7,12 @@ import { requestWrapper } from '@/js/helpers/requests'
 
 export const useAuthStore = defineStore({
     id: 'auth',
-    state: () => ({
-        user: localStorage.getItem('user'),
-        returnUrl: null
-    }),
+    state: () => {
+        return {
+            user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') ) : null,
+            returnUrl: null
+        }
+    },
     actions: {
         async login(username, password) {
             const user =  await (requestWrapper.post)(`api/login`, { email: username, password: password });
@@ -28,6 +30,15 @@ export const useAuthStore = defineStore({
             this.user = null;
             localStorage.removeItem('user');
             this.router.push('/login');
+        },
+        isLogged() {
+            if (this.user) {
+                if (this.user.token) {
+                    console.log("in second if statement");
+                    return true;
+                }
+            }
+            return false;
         }
     }
 });

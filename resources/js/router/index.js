@@ -7,12 +7,12 @@ const router = createRouter({
     routes,
 })
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to, from, next) => {
     const auth = useAuthStore();
-    console.log("Before each!");
-    if (!auth.user) {
-        console.log("User not yet authorized!");
+    if (to.matched.some(record => record.meta.guestOnly) && auth.isLogged()) {
+        next('/');
     }
+    next();
 });
 
 export default router;
