@@ -9,7 +9,7 @@ export const useAuthStore = defineStore({
     id: 'auth',
     state: () => {
         return {
-            user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') ) : null,
+            user: [null, 'undefined'].includes(localStorage.getItem('user')) ? null : JSON.parse(localStorage.getItem('user') ),
             returnUrl: null
         }
     },

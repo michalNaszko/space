@@ -12,11 +12,12 @@ router.beforeEach(async (to, from, next) => {
     if (to.matched.some(record => record.meta.guestOnly) && auth.isLogged()) {
         next('/');
     }
-
-    if (to.matched.some(record => record.meta.requiresAuth) && !auth.isLogged()) {
+    else if (to.matched.some(record => record.meta.requiresAuth) && !auth.isLogged()) {
         next('/login');
     }
-    next();
+    else {
+        next();
+    }
 });
 
 export default router;

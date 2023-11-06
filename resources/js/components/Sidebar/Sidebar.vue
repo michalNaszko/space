@@ -59,7 +59,6 @@ export default {
     },
     methods: {
         myEventHandler(e) {
-            console.log("Size changed! IsMobile: " + this.$isMobile() + " screen width: " + screen.width)
             this.isMobile = this.$isMobile()
         }
     },

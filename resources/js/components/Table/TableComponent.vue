@@ -29,10 +29,9 @@ export default {
         }
     },
     mounted() {
-        console.log("Mounted TableComponent");
-        console.log(document.getElementsByTagName("td")[0].offsetHeight);
         this.$refs["scrollTable"].initialize(
-           40
+           40,
+            "api/users"
         );
         this.items = this.$refs["scrollTable"].items;
     }

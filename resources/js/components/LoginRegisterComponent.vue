@@ -107,32 +107,8 @@ export default {
         async login() {
             const authStore = useAuthStore();
 
-
-            // if (!getCsrf.ok) {
-            //     throw new Error("Faild to set csrf token");
-            // }
-            //
-            // let csrfToken = $cookies.get("XSRF-TOKEN");
-            // console.log("Before cookie read!");
-            // console.log("getCsrf", csrfToken);
-
-
-
             return authStore.login(this.form.email, this.form.password)
                 .catch(error => console.log(error));
-
-
-
-            // axios.post("/api/" + this.getAction().toLowerCase(), {
-            //     email: this.form.email,
-            //     password: this.form.password
-            // })
-            //     .then(function (response) {
-            //         console.log(response);
-            //     })
-            //     .catch(function (error) {
-            //         console.log(error);
-            //     });
         },
         register() {
             if(this.form.password === this.form.passwordConf){

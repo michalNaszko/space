@@ -1,74 +1,4 @@
-const dataBase = [
-    { age: 1, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 2, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 3, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 4, first_name: 'Jami', last_name: 'Carney' },
-    { age: 5, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 6, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 7, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 8, first_name: 'Jami', last_name: 'Carney' },
-    { age: 9, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 10, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 11, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 12, first_name: 'Jami', last_name: 'Carney' },
-    { age: 13, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 14, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 15, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 16, first_name: 'Jami', last_name: 'Carney' },
-    { age: 17, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 18, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 19, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 20, first_name: 'Jami', last_name: 'Carney' },
-    { age: 21, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 22, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 23, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 24, first_name: 'Jami', last_name: 'Carney' },
-    { age: 25, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 26, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 27, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 28, first_name: 'Jami', last_name: 'Carney' },
-    { age: 29, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 30, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 31, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 32, first_name: 'Jami', last_name: 'Carney' },
-    { age: 33, first_name: 'Jami', last_name: 'Carney' },
-    { age: 34, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 35, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 36, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 37, first_name: 'Jami', last_name: 'Carney' },
-    { age: 38, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 39, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 40, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 41, first_name: 'Jami', last_name: 'Carney' },
-    { age: 42, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 43, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 44, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 45, first_name: 'Jami', last_name: 'Carney' },
-    { age: 46, first_name: 'Jami', last_name: 'Carney' },
-    { age: 47, first_name: 'Jami', last_name: 'Carney' },
-    { age: 48, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 49, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 50, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 51, first_name: 'Jami', last_name: 'Carney' },
-    { age: 52, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 53, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 54, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 55, first_name: 'Jami', last_name: 'Carney' },
-    { age: 56, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 57, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 58, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 59, first_name: 'Jami', last_name: 'Carney' },
-    { age: 60, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 61, first_name: 'Jami', last_name: 'Carney' },
-    { age: 62, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 63, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 64, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 65, first_name: 'Jami', last_name: 'Carney' },
-    { age: 66, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 67, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 68, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 69, first_name: 'Jami', last_name: 'Carney' },
-];
+import {requestWrapper} from "@/js/helpers/requests";
 
 const Load = {
     none: 0,
@@ -77,32 +7,29 @@ const Load = {
 }
 
 export default class Scrollable {
-    n;
-    scrollHeight;
-    elementHeight;
-    scrollTop;
 
-    initialize(tableScroll, elementHeight) {
+    async initialize(tableScroll, elementHeight, apiURL) {
+        this.mutex = false;
+        this.apiURL = apiURL;
         this.tableScroll = tableScroll;
         this.n = Math.ceil(tableScroll.clientHeight / elementHeight);
         this.scrollHeight = tableScroll.scrollHeight;
         this.elementHeight = elementHeight;
         this.scrollTop = tableScroll.scrollTop;
-        this.data = this.fetchData(0, 3 * this.n);
+        this.db = {start_idx: 0, data: null};
+        this.db.data = await this.fetchData(0, 3 * this.n);
         this.event = new Event("dataLoaded");
     }
 
-    fetchData(startIndex, endIndex) {
+    async fetchData(startIndex, endIndex) {
         if (startIndex < 0 || endIndex < startIndex)
             return;
 
-        return dataBase.slice(startIndex, endIndex).map((d, idx) => {
-            return  {idx: startIndex+idx, data: d};
-        });
+        return requestWrapper.get(this.apiURL + "?start_idx=" + startIndex +"&number=" + (endIndex - startIndex + 1), null);
     }
 
     whichDataLoad(scrollTop, topAtElementIdx) {
-        if (this.data[0].idx > 0 && topAtElementIdx <= this.n / 2) {
+        if (this.db.start_idx > 0 && topAtElementIdx <= this.n / 2) {
             return Load.prev;
         }
 
@@ -118,16 +45,18 @@ export default class Scrollable {
         {
             let newData;
             if (loadDirection === Load.prev) {
-                newData = this.data.slice(0, this.data.length - loadedData.length);
+                newData = this.db.data.slice(0, this.db.data.length - loadedData.length);
+                this.db.start_idx -= loadedData.length;
                 newData = loadedData.concat(newData);
             }
 
             if (loadDirection === Load.next) {
-                newData = this.data.slice(loadedData.length, this.data.length);
+                newData = this.db.data.slice(loadedData.length, this.db.data.length);
+                this.db.start_idx += loadedData.length;
                 newData = newData.concat(loadedData);
             }
 
-            this.data = newData;
+            this.db.data = newData;
             this.tableScroll.dispatchEvent(this.event);
         }
     }
@@ -142,35 +71,35 @@ export default class Scrollable {
     }
 
     getItems() {
-        return this.data.map(d => JSON.parse(JSON.stringify(d.data)));
+        return this.db.data;
     }
 
-    scroll() {
-        let topAtElementIdx = this.tableScroll.scrollTop / this.elementHeight;
-        let dataToLoadDirection = this.whichDataLoad(this.tableScroll.scrollTop , topAtElementIdx);
-        let startIdx;
-        let endIdx;
+    async scroll() {
+        if (!this.mutex) {
+            let topAtElementIdx = this.tableScroll.scrollTop / this.elementHeight;
+            let dataToLoadDirection = this.whichDataLoad(this.tableScroll.scrollTop, topAtElementIdx);
+            let startIdx;
+            let endIdx;
 
-        switch (dataToLoadDirection) {
-            case Load.prev:
-                startIdx = this.data[0].idx - 1 > this.n / 2 ?
-                    this.data[0].idx - this.n / 2 : 0;
-                endIdx = this.data[0].idx;
-                break;
-            case Load.next:
-                startIdx = this.data.at(-1).idx + 1;
-                endIdx = startIdx - 1 + this.n / 2;
-                break;
-            default:
-                return;
+            switch (dataToLoadDirection) {
+                case Load.prev:
+                    startIdx = this.db.start_idx - 1 > this.n / 2 ?
+                        this.db.start_idx  - this.n / 2 : 0;
+                    endIdx = this.db.start_idx;
+                    break;
+                case Load.next:
+                    startIdx = this.db.start_idx + this.db.data.length;
+                    endIdx = startIdx - 1 + this.n / 2;
+                    break;
+                default:
+                    return;
+            }
+
+            this.mutex = true;
+            let loadedData = await this.fetchData(startIdx, endIdx);
+            this.updateData(loadedData, dataToLoadDirection);
+            this.setScrollTop(dataToLoadDirection);
+            this.mutex = false;
         }
-
-        let loadedData = this.fetchData(startIdx, endIdx);
-        this.updateData(loadedData, dataToLoadDirection);
-        this.setScrollTop(dataToLoadDirection);
     }
-}
-
-function createScrollable(clientHeight, scrollHeight, elementHeight, scrollTop) {
-    return new Scrollable(clientHeight, scrollHeight, elementHeight, scrollTop);
 }

@@ -25,17 +25,17 @@ export default {
         onScroll() {
             this.scroll.scroll();
         },
-        initialize(elementHeight) {
+        async initialize(elementHeight, apiURL) {
             const scrollable = this.$refs["scrollable-div"];
-            this.scroll.initialize(
+            await this.scroll.initialize(
                 scrollable,
-                elementHeight
+                elementHeight,
+                apiURL
             );
             this.items = this.scroll.getItems();
         }
     },
     mounted() {
-        console.log("Mounted ScrollableComponent");
         const scrollable = this.$refs["scrollable-div"];
         this.scroll = new Scrollable();
 
