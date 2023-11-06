@@ -15,7 +15,6 @@ export default class Scrollable {
         this.n = Math.ceil(tableScroll.clientHeight / elementHeight);
         this.scrollHeight = tableScroll.scrollHeight;
         this.elementHeight = elementHeight;
-        this.scrollTop = tableScroll.scrollTop;
         this.db = {start_idx: 0, data: null};
         this.db.data = await this.fetchData(0, 3 * this.n);
         this.event = new Event("dataLoaded");
@@ -28,7 +27,7 @@ export default class Scrollable {
         return requestWrapper.get(this.apiURL + "?start_idx=" + startIndex +"&number=" + (endIndex - startIndex + 1), null);
     }
 
-    whichDataLoad(scrollTop, topAtElementIdx) {
+    whichDataLoad(topAtElementIdx) {
         if (this.db.start_idx > 0 && topAtElementIdx <= this.n / 2) {
             return Load.prev;
         }
@@ -61,12 +60,12 @@ export default class Scrollable {
         }
     }
 
-    setScrollTop(loadDirection) {
+    setScrollTop(loadDirection, loadedDataNumber) {
         if (loadDirection === Load.prev) {
-            this.scrollTop += this.elementHeight * this.n / 2;
+            this.tableScroll.scrollTop += this.elementHeight * loadedDataNumber;
         }
         else if (loadDirection === Load.next) {
-            this.scrollTop -= this.elementHeight * this.n / 2;
+            this.tableScroll.scrollTop -= this.elementHeight * loadedDataNumber;
         }
     }
 
@@ -77,19 +76,19 @@ export default class Scrollable {
     async scroll() {
         if (!this.mutex) {
             let topAtElementIdx = this.tableScroll.scrollTop / this.elementHeight;
-            let dataToLoadDirection = this.whichDataLoad(this.tableScroll.scrollTop, topAtElementIdx);
+            let dataToLoadDirection = this.whichDataLoad(topAtElementIdx);
             let startIdx;
             let endIdx;
 
             switch (dataToLoadDirection) {
                 case Load.prev:
-                    startIdx = this.db.start_idx - 1 > this.n / 2 ?
-                        this.db.start_idx  - this.n / 2 : 0;
+                    startIdx = this.db.start_idx - 1 > this.n ?
+                        this.db.start_idx  - this.n : 0;
                     endIdx = this.db.start_idx;
                     break;
                 case Load.next:
                     startIdx = this.db.start_idx + this.db.data.length;
-                    endIdx = startIdx - 1 + this.n / 2;
+                    endIdx = startIdx - 1 + this.n;
                     break;
                 default:
                     return;
@@ -98,7 +97,7 @@ export default class Scrollable {
             this.mutex = true;
             let loadedData = await this.fetchData(startIdx, endIdx);
             this.updateData(loadedData, dataToLoadDirection);
-            this.setScrollTop(dataToLoadDirection);
+            this.setScrollTop(dataToLoadDirection, loadedData.length);
             this.mutex = false;
         }
     }
