@@ -10,7 +10,8 @@ class UserController extends Controller
     /* request -> { start_idx: x, number: n } */
     function getUsers(Request $request): string
     {
-        return User::query()->skip($request->query('start_idx'))
+        return User::query()->select('Id', 'Name', 'Email', 'Role')
+            ->skip($request->query('start_idx'))
             ->take($request->query('number'))->get()->toJson();
     }
 }
